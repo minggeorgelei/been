@@ -150,6 +150,38 @@ async function onMapLoaded([map]) {
   const totalVisited = countries.filter(c => c.visited).length;
   $('header h3').textContent = `Visited: ${totalVisited}/${countries.length}`;
 
+  // Search / filter countries
+  const searchInput = $('.search-input');
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase().trim();
+    for (const region of map.regions) {
+      let visibleCount = 0;
+      for (const country of region.countries) {
+        const match = !query || country.name.toLowerCase().includes(query);
+        country.sidebarElement.classList.toggle('hidden', !match);
+        if (match) visibleCount++;
+      }
+      const regionElement = region.countries[0]?.sidebarElement.parentElement;
+      if (regionElement) {
+        regionElement.classList.toggle('hidden', visibleCount === 0);
+        const span = regionElement.querySelector('.region-title span');
+        const visitedCount = region.countries.filter(c => c.visited).length;
+        if (query) {
+          span.textContent = `${visibleCount} found · ${visitedCount}/${region.countries.length}`;
+        } else {
+          span.textContent = `${visitedCount}/${region.countries.length}`;
+        }
+      }
+    }
+  });
+  searchInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      searchInput.value = '';
+      searchInput.dispatchEvent(new Event('input'));
+      searchInput.blur();
+    }
+  });
+
   // Hover countries when hovering over
   countrylist.addEventListener('mousemove', hoverCountry, false);
   countrylist.addEventListener('mouseleave', hoverCountry, false);
