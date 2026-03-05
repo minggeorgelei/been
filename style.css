@@ -27,20 +27,22 @@ body {
   height: 100%;
   display: grid;
   grid-template-areas: "countries header"
+                       "countries stats"
                        "countries map"
                        "countries map";
   grid-template-columns: 250px auto;
-  grid-template-rows: 50px auto 50px;
+  grid-template-rows: 50px auto 1fr 50px;
   grid-gap: 10px;
 }
 
 @media only screen and (max-width: 600px) {
   body {
     grid-template-areas: "header"
+                         "stats"
                          "map"
                          "countries";
     grid-template-columns: auto;
-    grid-template-rows: 50px 1fr 2fr;
+    grid-template-rows: 50px auto 1fr 2fr;
   }
 
   .countrylist {
@@ -58,6 +60,84 @@ header {
 
 header h3 {
   margin: 0em;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stats-toggle {
+  background: none;
+  border: 1px solid #DDD;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #666;
+}
+
+.stats-toggle:hover {
+  background-color: #f0f0f0;
+}
+
+.stats-toggle.active {
+  background-color: #8bc34a;
+  border-color: #8bc34a;
+  color: white;
+}
+
+.stats-panel {
+  grid-area: stats;
+  margin: 0 1em;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+  max-height: 500px;
+  opacity: 1;
+}
+
+.stats-panel.collapsed {
+  max-height: 0;
+  opacity: 0;
+}
+
+.stats-row {
+  display: flex;
+  align-items: center;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.stats-label {
+  width: 110px;
+  flex-shrink: 0;
+  color: #555;
+}
+
+.stats-bar {
+  flex: 1;
+  height: 16px;
+  background-color: #eee;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 0 10px;
+}
+
+.stats-fill {
+  height: 100%;
+  background-color: #8bc34a;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+  min-width: 0;
+}
+
+.stats-count {
+  width: 80px;
+  flex-shrink: 0;
+  text-align: right;
+  color: #888;
+  font-size: 12px;
 }
 
 .countrylist {

@@ -148,7 +148,32 @@ async function onMapLoaded([map]) {
   // Update title
   const countries = map.regions.reduce((all, region) => [...all, ...region.countries], []);
   const totalVisited = countries.filter(c => c.visited).length;
-  $('header h3').textContent = `Visited: ${totalVisited}/${countries.length}`;
+  const totalPercent = countries.length ? ((totalVisited / countries.length) * 100).toFixed(1) : 0;
+  $('header h3').textContent = `Visited: ${totalVisited}/${countries.length} (${totalPercent}%)`;
+
+  // Build stats panel
+  const statsPanel = $('.stats-panel');
+  for (const region of map.regions) {
+    const visited = region.countries.filter(c => c.visited).length;
+    const total = region.countries.length;
+    const percent = total ? ((visited / total) * 100).toFixed(1) : 0;
+    const row = document.createElement('div');
+    row.className = 'stats-row';
+    row.innerHTML = `
+      <span class="stats-label">${region.name}</span>
+      <div class="stats-bar"><div class="stats-fill" style="width: ${percent}%"></div></div>
+      <span class="stats-count">${visited}/${total} ${percent}%</span>
+    `;
+    statsPanel.appendChild(row);
+  }
+
+  // Stats toggle
+  const statsToggle = $('.stats-toggle');
+  statsPanel.classList.add('collapsed');
+  statsToggle.addEventListener('click', () => {
+    statsPanel.classList.toggle('collapsed');
+    statsToggle.classList.toggle('active');
+  });
 
   // Search / filter countries
   const searchInput = $('.search-input');
