@@ -3,16 +3,51 @@
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+:root {
+  font-size: 16px;
+  --bg-page: rgb(246, 246, 246);
+  --bg-body: white;
+  --bg-region: #EEE;
+  --bg-bar: #eee;
+  --bg-hover: #f0f0f0;
+  --text: #333;
+  --text-secondary: #555;
+  --text-muted: #888;
+  --text-btn: #666;
+  --border: #DDD;
+  --map-fill: #ccc;
+  --map-stroke: white;
+  --green: #8bc34a;
+  --green-badge: #4CAF50;
+  --accent: blue;
+  --accent-half: rgba(0, 0, 255, 0.5);
+  --github-filter: none;
+}
+
+[data-theme="dark"] {
+  --bg-page: #1a1a2e;
+  --bg-body: #16213e;
+  --bg-region: #1a1a2e;
+  --bg-bar: #2a2a4a;
+  --bg-hover: #2a2a4a;
+  --text: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #808090;
+  --text-btn: #b0b0b0;
+  --border: #2a2a4a;
+  --map-fill: #2a2a4a;
+  --map-stroke: #16213e;
+  --accent: #5b9bd5;
+  --accent-half: rgba(91, 155, 213, 0.5);
+  --github-filter: invert(1);
+}
+
 html {
-  background-color: rgb(246, 246, 246);
+  background-color: var(--bg-page);
 }
 
 body {
-  background-color: white;
-}
-
-:root {
-  font-size: 16px;
+  background-color: var(--bg-body);
 }
 
 h3 {
@@ -20,7 +55,7 @@ h3 {
 }
 
 body {
-  color: #333;
+  color: var(--text);
   padding: 0;
   margin: 0 auto;
   max-width: 1280px;
@@ -46,7 +81,7 @@ body {
   }
 
   .countrylist {
-    border-top: 1px solid #DDD;
+    border-top: 1px solid var(--border);
   }
 }
 
@@ -62,30 +97,39 @@ header h3 {
   margin: 0em;
 }
 
+header a img {
+  filter: var(--github-filter);
+}
+
 .header-right {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.stats-toggle {
+.header-btn {
   background: none;
-  border: 1px solid #DDD;
+  border: 1px solid var(--border);
   border-radius: 4px;
   padding: 4px 10px;
   font-size: 13px;
   cursor: pointer;
-  color: #666;
+  color: var(--text-btn);
 }
 
-.stats-toggle:hover {
-  background-color: #f0f0f0;
+.header-btn:hover {
+  background-color: var(--bg-hover);
 }
 
-.stats-toggle.active {
-  background-color: #8bc34a;
-  border-color: #8bc34a;
+.header-btn.active {
+  background-color: var(--green);
+  border-color: var(--green);
   color: white;
+}
+
+.theme-toggle {
+  font-size: 16px;
+  padding: 4px 8px;
 }
 
 .stats-panel {
@@ -112,13 +156,13 @@ header h3 {
 .stats-label {
   width: 110px;
   flex-shrink: 0;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 .stats-bar {
   flex: 1;
   height: 16px;
-  background-color: #eee;
+  background-color: var(--bg-bar);
   border-radius: 8px;
   overflow: hidden;
   margin: 0 10px;
@@ -126,7 +170,7 @@ header h3 {
 
 .stats-fill {
   height: 100%;
-  background-color: #8bc34a;
+  background-color: var(--green);
   border-radius: 8px;
   transition: width 0.3s ease;
   min-width: 0;
@@ -136,14 +180,14 @@ header h3 {
   width: 80px;
   flex-shrink: 0;
   text-align: right;
-  color: #888;
+  color: var(--text-muted);
   font-size: 12px;
 }
 
 .countrylist {
   grid-area: countries;
-  border-left: 1px solid #DDD;
-  border-right: 1px solid #DDD;
+  border-left: 1px solid var(--border);
+  border-right: 1px solid var(--border);
   max-height: 100%;
   min-height: 0;
   overflow: auto;
@@ -159,21 +203,23 @@ header h3 {
   top: 0;
   z-index: 1;
   padding: 8px 10px;
-  background-color: white;
-  border-bottom: 1px solid #DDD;
+  background-color: var(--bg-body);
+  border-bottom: 1px solid var(--border);
 }
 
 .countrylist .search-input {
   width: 100%;
   padding: 6px 10px;
-  border: 1px solid #DDD;
+  border: 1px solid var(--border);
   border-radius: 4px;
   font-size: 14px;
   outline: none;
+  background-color: var(--bg-body);
+  color: var(--text);
 }
 
 .countrylist .search-input:focus {
-  border-color: #8bc34a;
+  border-color: var(--green);
 }
 
 .hidden {
@@ -188,9 +234,8 @@ header h3 {
   position: sticky;
   position: -webkit-sticky;
   top: 0;
-  background-color: white;
   padding: 4px var(--gap);
-  background-color: #EEE;
+  background-color: var(--bg-region);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -209,26 +254,25 @@ header h3 {
 }
 
 .countrylist .region .entry.revealing {
-  color: blue !important;
+  color: var(--accent) !important;
 }
 
 .countrylist .region .entry.hovered {
-  color: rgba(0, 0, 255, 0.5);
+  color: var(--accent-half);
 }
 
 .countrylist .region .entry.visited::after {
   content: '✔';
   font-size: 12px;
-  --green: #4CAF50;
   color: white;
   padding: 1px 3px;
   border-radius: 3px;
-  background-color: var(--green);
+  background-color: var(--green-badge);
 }
 
 .countrylist .region .entry + .entry {
   padding-top: var(--gap);
-  border-top: 1px solid #DDD;
+  border-top: 1px solid var(--border);
 }
 
 .map {
@@ -246,25 +290,25 @@ header h3 {
 }
 
 .map svg .revealing {
-  fill: blue !important;
+  fill: var(--accent) !important;
   fill-opacity: 1 !important;
 }
 
 .map svg .visited {
-  fill: #8bc34a;
+  fill: var(--green);
 }
 
 .map svg path {
   cursor: pointer;
-  fill: #ccc;
+  fill: var(--map-fill);
   fill-opacity: 1;
-  stroke: white;
+  stroke: var(--map-stroke);
   stroke-opacity: 1;
   stroke-width: 0.5;
 }
 
 .map svg path.hovered {
-  fill: blue;
+  fill: var(--accent);
   fill-opacity: 0.5;
 }
 
